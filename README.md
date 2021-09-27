@@ -13,3 +13,5 @@ This Package is providing Prefabs and Classes in the 'class-entity' coding style
 ## Quick Version Log
 - 0.0.0 
   - Project Create
+- 0.0.1
+  - Add the basic entity components
