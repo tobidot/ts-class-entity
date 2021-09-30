@@ -1,4 +1,4 @@
-# Ts Game Toolbox
+# Ts Class Entities
 
 Disclaimer:
 This is a privately managed package feel free to use it at own risk.
@@ -15,3 +15,5 @@ This Package is providing Prefabs and Classes in the 'class-entity' coding style
   - Project Create
 - 0.0.1
   - Add the basic entity components
+- 0.0.2 
+  - Add helper functions for facotries 

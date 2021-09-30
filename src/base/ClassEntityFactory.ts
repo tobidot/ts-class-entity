@@ -32,6 +32,49 @@ export class ClassEntityFactory<ENTITY> {
     }
 
     /**
+     * Prepares the entity input parameters to create an initial empty class.
+     * @returns 
+     */
+    protected prepare(): ENTITY {
+        const result = this.prepare_func();
+        const parent = result[0];
+        const config = result[1];
+        if (!parent) throw new Error('Unable to run Factory: Prepare method did not return a parent.');
+        return new this.entity_class(parent, config);
+    }
+
+    /**
+     * Append a new function to modify the created entities
+     * @param callback Function to modify the entitiy
+     *  (entity) => entity
+     * @returns this
+     */
+    protected after_create(callback: CreateFunction<ENTITY>): this {
+        const prev = this.create_func;
+        this.create_func = (entity: ENTITY): ENTITY => {
+            return callback(prev(entity));
+        };
+        return this;
+    }
+
+    /**
+     * Append a new function to modify the prepared data before creating an entities
+     * @param callback Function to modify the preparation data
+     *  (parent, settings) => [parent, settings] 
+     * @returns this
+     */
+    protected after_prepare(callback: PrepareFunction<GetParentOfClassEntity<ENTITY>, GetSettingsOfClassEntity<ENTITY>>) {
+        type PARENT = GetParentOfClassEntity<ENTITY>;
+        type SETTINGS = GetSettingsOfClassEntity<ENTITY>;
+        const prev = this.prepare_func;
+        this.prepare_func = (parent?: PARENT, settings?: SETTINGS): [PARENT | undefined, SETTINGS | undefined] => {
+            const result = prev(parent, settings);
+            return callback(result[0], result[1]);
+        };
+        return this;
+    }
+
+    /**
      * Create models based on the previous factory settings.
      * @param count How many entities should be created
      */
@@ -66,18 +109,6 @@ export class ClassEntityFactory<ENTITY> {
             return [old_parent, new_settings];
         }
         return this;
-    }
-
-    /**
-     * Prepares the entity input parameters to create an initial empty class.
-     * @returns 
-     */
-    protected prepare(): ENTITY {
-        const result = this.prepare_func();
-        const parent = result[0];
-        const config = result[1];
-        if (!parent) throw new Error('Unable to run Factory: Prepare method did not return a parent.');
-        return new this.entity_class(parent, config);
     }
 
 
