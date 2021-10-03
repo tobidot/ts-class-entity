@@ -17,3 +17,5 @@ This Package is providing Prefabs and Classes in the 'class-entity' coding style
   - Add the basic entity components
 - 0.0.2 
   - Add helper functions for facotries 
+- 0.0.3 
+  - Loosing up the connection between BaseClassEntity and SimpleClassEntity
