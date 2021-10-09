@@ -82,7 +82,7 @@ export class ClassEntityFactory<ENTITY> {
     public create(count: number): Array<ENTITY>;
     public create(count: number = 1): ENTITY | Array<ENTITY> {
         if (count === 1) return this.create_func(this.prepare());
-        return [new Array(count)].map(() => this.create_func(this.prepare()));
+        return [...new Array(count)].map(() => this.create_func(this.prepare()));
     }
 
     /**

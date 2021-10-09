@@ -14,6 +14,14 @@ describe('class example factory', () => {
         assert.ok(entity instanceof ExampleClassEntity, "Entity is of wrong type");
     });
 
+    it('factory can create multiple simple entity', () => {
+        const factory = new ExampleClassEntityFactory(main);
+        const entities = factory.create(4);
+        assert.ok(entities, "Entity could not be created");
+        assert.ok(entities instanceof Array, "Entity is not an array");
+        assert.strictEqual(entities.length, 4, "Entity count does not match requiered amount");
+    });
+
     it('factory modifiers are applied', () => {
         const factory = new ExampleClassEntityFactory(main);
         const entity = factory.name("Schlund").headstart().create();
