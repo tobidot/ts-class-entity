@@ -1,6 +1,7 @@
 import { ExampleMain } from "./ExampleMain";
 import { Class, EventBase, EventSocket } from "@game.object/ts-game-toolbox";
 import { BaseClassEntity } from "../base/ClassEntity";
+import { SettingsInput } from "../base/Settings";
 
 interface Settings {
     setting_prop?: string
@@ -14,13 +15,21 @@ type Events = ExampleClassEvent;
  * but it holds only references to its parts.
  */
 export class ExampleClassEntity extends BaseClassEntity<
-    ExampleClassEntity, ExampleMain, Settings, Elements, Logic, Properties, Components, Listeners, Events
+    ExampleClassEntity,
+    ExampleMain,
+    Settings,
+    Elements,
+    Logic,
+    Properties,
+    Components,
+    Listeners,
+    Events
 > {
-    protected static readonly default_settings: Settings = {};
+    public static readonly default_settings: Settings = {};
 
     public constructor(
         public parent: ExampleMain,
-        config: Partial<Settings> = {}
+        config: SettingsInput<ExampleClassEntity, typeof ExampleClassEntity> = {}
     ) {
         super(
             parent, Elements, Logic, Properties, Components, Listeners,
